@@ -1,0 +1,29 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://pvnvrqroy0n8"]
+
+[ext_resource type="FontFile" uid="uid://pnwnidekmy3l" path="res://Fonts/Barriecito-Regular.ttf" id="1_51034"]
+[ext_resource type="Texture2D" uid="uid://ikufm62yp0iu" path="res://Packages/kenney_ui-pack-adventure/PNG/Double/panel_brown.png" id="1_ju0yn"]
+[ext_resource type="Texture2D" uid="uid://dwepapp68805b" path="res://Packages/kenney_ui-pack-adventure/PNG/Default/progress_blue.png" id="3_2tloi"]
+[ext_resource type="Texture2D" uid="uid://dehr2ckak5c4p" path="res://Packages/kenney_ui-pack-adventure/PNG/Default/panel_grey.png" id="3_66pm1"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qjy1l"]
+texture = ExtResource("1_ju0yn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_66pm1"]
+texture = ExtResource("3_66pm1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d6k6b"]
+texture = ExtResource("3_2tloi")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_51034"]
+
+[resource]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/font_sizes/font_size = 76
+Label/fonts/font = ExtResource("1_51034")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_qjy1l")
+ProgressBar/styles/background = SubResource("StyleBoxTexture_66pm1")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_d6k6b")
+Title1/base_type = &"Label"
+Title1/colors/font_color = Color(0.956863, 0, 0, 1)
+Title1/font_sizes/font_size = 25
+Title1/styles/normal = SubResource("StyleBoxFlat_51034")

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8yvh56oudu4r"]
+
+[ext_resource type="Script" uid="uid://dpynnf3mpkxhh" path="res://Scripts/prisoner.gd" id="1_mdajx"]
+[ext_resource type="Texture2D" uid="uid://clowlmfa8v7p0" path="res://Packages/Characters/Dark_Oracle_1/PNG/PNG Sequences/Idle/0_Dark_Oracle_Idle_000.png" id="1_slvsn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rixhm"]
+radius = 268.539
+
+[node name="Prisoner" type="CharacterBody2D"]
+script = ExtResource("1_mdajx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.595, 0.595)
+shape = SubResource("CircleShape2D_rixhm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.595, 0.595)
+texture = ExtResource("1_slvsn")

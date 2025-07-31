@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://nhobxflavqwp"]
+
+[ext_resource type="Theme" uid="uid://pvnvrqroy0n8" path="res://Themes/new_theme.tres" id="1_7kd32"]
+
+[node name="CharacterUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_right = 126.0
+offset_bottom = 77.0
+theme = ExtResource("1_7kd32")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_right = 95
+theme_override_constants/margin_bottom = 75
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 95
+theme_override_constants/v_separation = 45
+columns = 2
+
+[node name="Name" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.894118, 0, 0, 1)
+text = "Name"
+
+[node name="NameLabel" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Giorgio"
+
+[node name="Crime" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.894118, 0, 0, 1)
+text = "Crime"
+
+[node name="CrimeLabel" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Murder"
+
+[node name="Trait" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"GraphFrameTitleLabel"
+theme_override_colors/font_color = Color(0.894118, 0, 0, 1)
+text = "Trait"
+
+[node name="TraitLabel" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Beard"

@@ -1,0 +1,117 @@
+[gd_scene load_steps=12 format=3 uid="uid://bkd0wru3tclf4"]
+
+[ext_resource type="Script" uid="uid://cg8ihy2dnr7hk" path="res://Scripts/game.gd" id="1_v158k"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="1_wrm1d"]
+[ext_resource type="Theme" uid="uid://pvnvrqroy0n8" path="res://Themes/new_theme.tres" id="2_1l0tm"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="2_3dryh"]
+[ext_resource type="Script" uid="uid://u4kwvkraaew1" path="res://Scripts/ui.gd" id="3_ldgsr"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="3_wowpa"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://nhobxflavqwp" path="res://Scenes/character_ui.tscn" id="6_i6g32"]
+[ext_resource type="Script" uid="uid://bg5ek8brhw1vr" path="res://Scripts/prisoner_spawner.gd" id="8_h4fw4"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="11_o5yvi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wowpa"]
+font_size = 87
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_v158k")
+
+[node name="Ui" type="CanvasLayer" parent="."]
+
+[node name="TimeLeft" type="Label" parent="Ui"]
+offset_left = 620.0
+offset_top = 27.0
+offset_right = 863.0
+offset_bottom = 92.0
+text = "Time Left : "
+label_settings = SubResource("LabelSettings_wowpa")
+
+[node name="TimeLeft2" type="Label" parent="Ui"]
+offset_left = 202.0
+offset_top = 860.0
+offset_right = 721.0
+offset_bottom = 979.0
+text = "Suspect Bar:"
+label_settings = SubResource("LabelSettings_wowpa")
+
+[node name="CrimeInfoPanel" parent="Ui" instance=ExtResource("6_i6g32")]
+offset_left = 978.0
+offset_top = 209.0
+offset_right = 978.0
+offset_bottom = 209.0
+script = ExtResource("3_ldgsr")
+
+[node name="PanelContainer" type="PanelContainer" parent="Ui"]
+offset_left = 749.0
+offset_top = 862.0
+offset_right = 1749.0
+offset_bottom = 992.0
+
+[node name="SuspicionBar" type="ProgressBar" parent="Ui/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_1l0tm")
+show_percentage = false
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("1_wrm1d")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="CompoundState" type="Node" parent="StateMachine"]
+script = ExtResource("2_3dryh")
+initial_state = NodePath("NewPrisoner")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="Idle" type="Node" parent="StateMachine/CompoundState"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateMachine/CompoundState/Idle"]
+script = ExtResource("4_3dryh")
+to = NodePath("../../NewPrisoner")
+event = &"StartDay"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="NewPrisoner" type="Node" parent="StateMachine/CompoundState"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="PlayerDecision" type="Node" parent="StateMachine/CompoundState"]
+script = ExtResource("2_3dryh")
+initial_state = NodePath("MercyPuzzle")
+metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="MercyPuzzle" type="Node" parent="StateMachine/CompoundState/PlayerDecision"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="BruteForce" type="Node" parent="StateMachine/CompoundState/PlayerDecision"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="ResolveDecision" type="Node" parent="StateMachine/CompoundState"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="CheckEndDay" type="Node" parent="StateMachine/CompoundState"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="EndDay" type="Node" parent="StateMachine/CompoundState"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="PrisonerSpawner" type="Node2D" parent="."]
+position = Vector2(410, 420)
+script = ExtResource("8_h4fw4")
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("11_o5yvi")]
+offset_left = 1537.0
+offset_top = 13.0
+offset_right = 1807.0
+offset_bottom = 202.0
+initial_node_to_watch = NodePath("../StateMachine")
+
+[connection signal="state_entered" from="StateMachine/CompoundState/NewPrisoner" to="." method="_on_new_prisoner_state_entered"]
