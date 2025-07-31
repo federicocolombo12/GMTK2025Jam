@@ -61,6 +61,7 @@ theme = ExtResource("2_1l0tm")
 show_percentage = false
 
 [node name="DecisionUi" type="Control" parent="Ui"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 464.0
@@ -165,7 +166,7 @@ metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 script = ExtResource("4_3dryh")
 to = NodePath("../../../ResolveDecision")
 event = &"MinigameEnded"
-delay_in_seconds = "0.0"
+delay_in_seconds = "2"
 metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
 [node name="BruteForce" type="Node" parent="StateMachine/CompoundState/PlayerDecision"]
@@ -204,6 +205,7 @@ offset_bottom = 202.0
 initial_node_to_watch = NodePath("../StateMachine")
 
 [node name="MinigameOverlay" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("16_nnt18")
 
 [node name="Control" type="Control" parent="MinigameOverlay"]
@@ -233,6 +235,15 @@ offset_bottom = 192.0
 theme_override_colors/font_color = Color(0.864675, 0.864675, 0.864675, 1)
 text = "Custom Enigma"
 
+[node name="Feedback" type="Label" parent="MinigameOverlay/Control"]
+layout_mode = 0
+offset_left = 716.0
+offset_top = 345.0
+offset_right = 1216.0
+offset_bottom = 438.0
+theme_override_colors/font_color = Color(0.864675, 0.864675, 0.864675, 1)
+text = "Custom Enigma"
+
 [node name="Input" type="LineEdit" parent="MinigameOverlay/Control"]
 layout_mode = 1
 anchors_preset = 8
@@ -259,9 +270,13 @@ offset_bottom = 92.0
 text = "Submit"
 metadata/_edit_use_anchors_ = true
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="state_entered" from="StateMachine/CompoundState/NewPrisoner" to="." method="_on_new_prisoner_state_entered"]
 [connection signal="state_entered" from="StateMachine/CompoundState/PlayerDecision/DecisionState" to="." method="_on_decision_state_state_entered"]
 [connection signal="state_exited" from="StateMachine/CompoundState/PlayerDecision/DecisionState" to="." method="_on_decision_state_state_exited"]
 [connection signal="state_entered" from="StateMachine/CompoundState/PlayerDecision/MercyPuzzle" to="." method="_on_mercy_puzzle_state_entered"]
+[connection signal="state_entered" from="StateMachine/CompoundState/ResolveDecision" to="." method="_on_resolve_decision_state_entered"]
+[connection signal="password_game_ended" from="MinigameOverlay" to="." method="_on_minigame_overlay_password_game_ended"]
 [connection signal="visibility_changed" from="MinigameOverlay" to="MinigameOverlay" method="_on_visibility_changed"]
 [connection signal="pressed" from="MinigameOverlay/Control/Submit" to="MinigameOverlay" method="_on_submit_pressed"]
