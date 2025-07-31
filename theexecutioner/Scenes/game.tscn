@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bkd0wru3tclf4"]
+[gd_scene load_steps=18 format=3 uid="uid://bkd0wru3tclf4"]
 
 [ext_resource type="Script" uid="uid://cg8ihy2dnr7hk" path="res://Scripts/game.gd" id="1_v158k"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="1_wrm1d"]
@@ -7,11 +7,15 @@
 [ext_resource type="Script" uid="uid://u4kwvkraaew1" path="res://Scripts/ui.gd" id="3_ldgsr"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="3_wowpa"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="4_3dryh"]
+[ext_resource type="Texture2D" uid="uid://q7uv8j3ustq5" path="res://Packages/Keyboard & Mouse/Default/keyboard_e.png" id="5_1phco"]
+[ext_resource type="Script" uid="uid://75mr0atkc08h" path="res://Scripts/decision_ui.gd" id="5_nb51f"]
 [ext_resource type="PackedScene" uid="uid://nhobxflavqwp" path="res://Scenes/character_ui.tscn" id="6_i6g32"]
+[ext_resource type="Texture2D" uid="uid://bfej614588wnd" path="res://Packages/Keyboard & Mouse/Default/keyboard_q.png" id="6_nb51f"]
 [ext_resource type="Script" uid="uid://bg5ek8brhw1vr" path="res://Scripts/prisoner_spawner.gd" id="8_h4fw4"]
 [ext_resource type="Script" uid="uid://cnuqeplumme6s" path="res://Resources/character_resource.gd" id="10_rku1e"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="11_o5yvi"]
 [ext_resource type="Resource" uid="uid://drqm172m72grx" path="res://Resources/first_char.tres" id="11_rfjv2"]
+[ext_resource type="Script" uid="uid://dw75agougbvyn" path="res://Scenes/password_puzzle_manager.gd" id="16_nnt18"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wowpa"]
 font_size = 87
@@ -38,10 +42,10 @@ text = "Suspect Bar:"
 label_settings = SubResource("LabelSettings_wowpa")
 
 [node name="CrimeInfoPanel" parent="Ui" instance=ExtResource("6_i6g32")]
-offset_left = 978.0
-offset_top = 209.0
-offset_right = 978.0
-offset_bottom = 209.0
+offset_left = 981.0
+offset_top = 165.0
+offset_right = 981.0
+offset_bottom = 165.0
 script = ExtResource("3_ldgsr")
 
 [node name="PanelContainer" type="PanelContainer" parent="Ui"]
@@ -55,6 +59,50 @@ layout_mode = 2
 size_flags_vertical = 1
 theme = ExtResource("2_1l0tm")
 show_percentage = false
+
+[node name="DecisionUi" type="Control" parent="Ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 464.0
+offset_top = 716.0
+offset_right = 504.0
+offset_bottom = 756.0
+script = ExtResource("5_nb51f")
+
+[node name="HFlowContainer2" type="HFlowContainer" parent="Ui/DecisionUi"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -3.0
+offset_right = 508.0
+offset_bottom = 97.0
+theme = ExtResource("2_1l0tm")
+alignment = 1
+
+[node name="Execute_Label" type="Label" parent="Ui/DecisionUi/HFlowContainer2"]
+layout_mode = 2
+text = "Execute"
+
+[node name="TextureRect2" type="TextureRect" parent="Ui/DecisionUi/HFlowContainer2"]
+layout_mode = 2
+texture = ExtResource("6_nb51f")
+stretch_mode = 6
+
+[node name="HFlowContainer" type="HFlowContainer" parent="Ui/DecisionUi"]
+layout_mode = 0
+offset_left = 588.0
+offset_right = 1088.0
+offset_bottom = 100.0
+theme = ExtResource("2_1l0tm")
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Ui/DecisionUi/HFlowContainer"]
+layout_mode = 2
+texture = ExtResource("5_1phco")
+stretch_mode = 6
+
+[node name="Free_Label" type="Label" parent="Ui/DecisionUi/HFlowContainer"]
+layout_mode = 2
+text = "Free"
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("1_wrm1d")
@@ -80,18 +128,56 @@ metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 script = ExtResource("3_wowpa")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
+[node name="Transition" type="Node" parent="StateMachine/CompoundState/NewPrisoner"]
+script = ExtResource("4_3dryh")
+to = NodePath("../../PlayerDecision")
+delay_in_seconds = "3"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
 [node name="PlayerDecision" type="Node" parent="StateMachine/CompoundState"]
 script = ExtResource("2_3dryh")
-initial_state = NodePath("MercyPuzzle")
+initial_state = NodePath("DecisionState")
 metadata/_custom_type_script = "uid://jk2jm1g6q853"
+
+[node name="DecisionState" type="Node" parent="StateMachine/CompoundState/PlayerDecision"]
+script = ExtResource("3_wowpa")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateMachine/CompoundState/PlayerDecision/DecisionState"]
+script = ExtResource("4_3dryh")
+to = NodePath("../../MercyPuzzle")
+event = &"ChooseMercy"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
+[node name="Transition2" type="Node" parent="StateMachine/CompoundState/PlayerDecision/DecisionState"]
+script = ExtResource("4_3dryh")
+to = NodePath("../../BruteForce")
+event = &"ChooseExecute"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
 [node name="MercyPuzzle" type="Node" parent="StateMachine/CompoundState/PlayerDecision"]
 script = ExtResource("3_wowpa")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
+[node name="Transition" type="Node" parent="StateMachine/CompoundState/PlayerDecision/MercyPuzzle"]
+script = ExtResource("4_3dryh")
+to = NodePath("../../../ResolveDecision")
+event = &"MinigameEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
 [node name="BruteForce" type="Node" parent="StateMachine/CompoundState/PlayerDecision"]
 script = ExtResource("3_wowpa")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
+[node name="Transition" type="Node" parent="StateMachine/CompoundState/PlayerDecision/BruteForce"]
+script = ExtResource("4_3dryh")
+to = NodePath("../../../ResolveDecision")
+event = &"MinigameEnded"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
 
 [node name="ResolveDecision" type="Node" parent="StateMachine/CompoundState"]
 script = ExtResource("3_wowpa")
@@ -106,7 +192,7 @@ script = ExtResource("3_wowpa")
 metadata/_custom_type_script = "uid://cytafq8i1y8qm"
 
 [node name="PrisonerSpawner" type="Node2D" parent="."]
-position = Vector2(410, 420)
+position = Vector2(387, 306)
 script = ExtResource("8_h4fw4")
 character_resource = Array[ExtResource("10_rku1e")]([ExtResource("11_rfjv2")])
 
@@ -117,4 +203,65 @@ offset_right = 1807.0
 offset_bottom = 202.0
 initial_node_to_watch = NodePath("../StateMachine")
 
+[node name="MinigameOverlay" type="CanvasLayer" parent="."]
+script = ExtResource("16_nnt18")
+
+[node name="Control" type="Control" parent="MinigameOverlay"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_1l0tm")
+
+[node name="ColorRect" type="ColorRect" parent="MinigameOverlay/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.815686)
+
+[node name="Enigma" type="Label" parent="MinigameOverlay/Control"]
+layout_mode = 0
+offset_left = 716.0
+offset_top = 169.0
+offset_right = 756.0
+offset_bottom = 192.0
+theme_override_colors/font_color = Color(0.864675, 0.864675, 0.864675, 1)
+text = "Custom Enigma"
+
+[node name="Input" type="LineEdit" parent="MinigameOverlay/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -235.0
+offset_top = -34.5
+offset_right = 235.0
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "hello everyone"
+
+[node name="Submit" type="Button" parent="MinigameOverlay/Control"]
+layout_mode = 0
+anchor_left = 0.369792
+anchor_top = 0.650926
+anchor_right = 0.373958
+anchor_bottom = 0.658333
+offset_right = 492.0
+offset_bottom = 92.0
+text = "Submit"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="state_entered" from="StateMachine/CompoundState/NewPrisoner" to="." method="_on_new_prisoner_state_entered"]
+[connection signal="state_entered" from="StateMachine/CompoundState/PlayerDecision/DecisionState" to="." method="_on_decision_state_state_entered"]
+[connection signal="state_exited" from="StateMachine/CompoundState/PlayerDecision/DecisionState" to="." method="_on_decision_state_state_exited"]
+[connection signal="state_entered" from="StateMachine/CompoundState/PlayerDecision/MercyPuzzle" to="." method="_on_mercy_puzzle_state_entered"]
+[connection signal="visibility_changed" from="MinigameOverlay" to="MinigameOverlay" method="_on_visibility_changed"]
+[connection signal="pressed" from="MinigameOverlay/Control/Submit" to="MinigameOverlay" method="_on_submit_pressed"]
