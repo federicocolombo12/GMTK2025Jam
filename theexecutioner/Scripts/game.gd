@@ -5,11 +5,13 @@ extends Node
 @onready var crime_info_ui: Control = $Ui/CrimeInfoPanel
 @onready var suspicion_bar: ProgressBar = $Ui/PanelContainer/SuspicionBar
 @onready var decision_ui: Control = $Ui/DecisionUi
-@onready var minigame_ui: CanvasLayer = $MinigameOverlay
+@onready var minigame_ui: CanvasLayer = $PasswordGameOverlay
+@onready var bruteforcegame_ui: CanvasLayer = $BruteForceGameOverlay2
+
 @export var mercy_buff: float = 10.0
 @export var brute_force: float = 15.0
 @onready var timer_node = $Timer
-
+signal timer_changed(new_time_left:float)
 @export var time_left := 120.0
 
 var suspicion := 0.0
@@ -17,12 +19,13 @@ var current_prisoner = null
 
 func _ready():
 	state_chart.send_event("StartDay")
-	timer_node.timeout.connect(_on_CountdownTimer_timeout)
+	
 
 	
 func _on_CountdownTimer_timeout():
 	time_left -= 1
 	print("Secondi rimasti:", time_left)
+	timer_changed.emit(time_left)
 
 	if time_left <= 0:
 		print("Tempo scaduto!")
@@ -76,3 +79,11 @@ func _on_minigame_overlay_password_game_ended() -> void:
 
 func _on_resolve_decision_state_entered() -> void:
 	minigame_ui.deactivate_self()
+
+
+func _on_brute_force_state_entered() -> void:
+	bruteforcegame_ui.activate_self()
+
+
+func _on_brute_force_game_overlay_2_finished(successful: bool) -> void:
+	state_chart.send_event("MinigameEnded")

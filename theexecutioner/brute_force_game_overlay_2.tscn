@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://f23hy8bvcrdi"]
+
+[ext_resource type="Script" uid="uid://414einqfbtlw" path="res://Scenes/brute_force_game_overlay_2.gd" id="1_l0yvn"]
+[ext_resource type="Theme" uid="uid://pvnvrqroy0n8" path="res://Themes/new_theme.tres" id="2_ltwlf"]
+[ext_resource type="Texture2D" uid="uid://byr8f526lbe5q" path="res://Packages/Keyboard & Mouse/Default/keyboard_0.png" id="3_o260q"]
+[ext_resource type="Texture2D" uid="uid://dr4cnk1fi8uul" path="res://Packages/Keyboard & Mouse/Default/keyboard_7.png" id="4_3ds38"]
+[ext_resource type="Texture2D" uid="uid://dmw8oh6hodcoe" path="res://Packages/Keyboard & Mouse/Default/keyboard_arrows_left.png" id="5_jo4kl"]
+[ext_resource type="Texture2D" uid="uid://bb0tk44ylhnp2" path="res://Packages/Keyboard & Mouse/Default/keyboard_asterisk.png" id="6_6htci"]
+[ext_resource type="Texture2D" uid="uid://dy4febajqnutd" path="res://Packages/Keyboard & Mouse/Default/keyboard_bracket_open.png" id="7_8p8n6"]
+[ext_resource type="Texture2D" uid="uid://bqrejmauxs0sv" path="res://Packages/Keyboard & Mouse/Default/keyboard_comma.png" id="8_4jbtd"]
+
+[node name="BruteForceGameOverlay2" type="CanvasLayer"]
+script = ExtResource("1_l0yvn")
+
+[node name="BruteForceTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.831373)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_direction = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ltwlf")
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.881937, 0.881937, 0.881937, 1)
+text = "Press the buttons in the correct order"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_o260q")
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_3ds38")
+
+[node name="TextureRect3" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_jo4kl")
+
+[node name="TextureRect4" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_6htci")
+
+[node name="TextureRect5" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_8p8n6")
+
+[node name="TextureRect6" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_4jbtd")

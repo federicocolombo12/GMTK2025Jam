@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bkd0wru3tclf4"]
+[gd_scene load_steps=21 format=3 uid="uid://bkd0wru3tclf4"]
 
 [ext_resource type="Script" uid="uid://cg8ihy2dnr7hk" path="res://Scripts/game.gd" id="1_v158k"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="1_wrm1d"]
 [ext_resource type="Theme" uid="uid://pvnvrqroy0n8" path="res://Themes/new_theme.tres" id="2_1l0tm"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="2_3dryh"]
+[ext_resource type="Script" uid="uid://bhnmo6154gxp" path="res://Scenes/ui_manager.gd" id="2_ewbju"]
 [ext_resource type="Script" uid="uid://u4kwvkraaew1" path="res://Scripts/ui.gd" id="3_ldgsr"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="3_wowpa"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="4_3dryh"]
@@ -15,7 +16,9 @@
 [ext_resource type="Script" uid="uid://cnuqeplumme6s" path="res://Resources/character_resource.gd" id="10_rku1e"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="11_o5yvi"]
 [ext_resource type="Resource" uid="uid://drqm172m72grx" path="res://Resources/first_char.tres" id="11_rfjv2"]
-[ext_resource type="Script" uid="uid://dw75agougbvyn" path="res://Scenes/password_puzzle_manager.gd" id="16_nnt18"]
+[ext_resource type="PackedScene" uid="uid://wvclvayvsqul" path="res://password_game_overlay.tscn" id="17_85qyi"]
+[ext_resource type="PackedScene" uid="uid://cfrdfc4ixvujx" path="res://brute_force_game_overlay.tscn" id="18_85qyi"]
+[ext_resource type="PackedScene" uid="uid://k1kmblt2pufa" path="res://Scenes/background.tscn" id="19_iivbl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wowpa"]
 font_size = 87
@@ -24,21 +27,29 @@ font_size = 87
 script = ExtResource("1_v158k")
 
 [node name="Ui" type="CanvasLayer" parent="."]
+script = ExtResource("2_ewbju")
 
 [node name="TimeLeft" type="Label" parent="Ui"]
 offset_left = 620.0
 offset_top = 27.0
 offset_right = 863.0
 offset_bottom = 92.0
-text = "Time Left : "
+text = "Time Left : 120"
 label_settings = SubResource("LabelSettings_wowpa")
 
-[node name="TimeLeft2" type="Label" parent="Ui"]
-offset_left = 202.0
-offset_top = 860.0
-offset_right = 721.0
-offset_bottom = 979.0
-text = "Suspect Bar:"
+[node name="SuspectBarLabel" type="Label" parent="Ui"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -259.0
+offset_top = -357.0
+offset_right = 260.0
+offset_bottom = -238.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Suspect Bar"
 label_settings = SubResource("LabelSettings_wowpa")
 
 [node name="CrimeInfoPanel" parent="Ui" instance=ExtResource("6_i6g32")]
@@ -48,16 +59,24 @@ offset_right = 981.0
 offset_bottom = 165.0
 script = ExtResource("3_ldgsr")
 
-[node name="PanelContainer" type="PanelContainer" parent="Ui"]
-offset_left = 749.0
-offset_top = 862.0
-offset_right = 1749.0
-offset_bottom = 992.0
+[node name="SuspectBar" type="PanelContainer" parent="Ui"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -194.0
+offset_right = 500.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="SuspicionBar" type="ProgressBar" parent="Ui/PanelContainer"]
+[node name="SuspicionBar" type="ProgressBar" parent="Ui/SuspectBar"]
 layout_mode = 2
 size_flags_vertical = 1
 theme = ExtResource("2_1l0tm")
+value = 50.0
 show_percentage = false
 
 [node name="DecisionUi" type="Control" parent="Ui"]
@@ -204,79 +223,22 @@ offset_right = 1807.0
 offset_bottom = 202.0
 initial_node_to_watch = NodePath("../StateMachine")
 
-[node name="MinigameOverlay" type="CanvasLayer" parent="."]
+[node name="PasswordGameOverlay" parent="." instance=ExtResource("17_85qyi")]
+
+[node name="BruteForceGameOverlay2" parent="." instance=ExtResource("18_85qyi")]
 visible = false
-script = ExtResource("16_nnt18")
-
-[node name="Control" type="Control" parent="MinigameOverlay"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_1l0tm")
-
-[node name="ColorRect" type="ColorRect" parent="MinigameOverlay/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.815686)
-
-[node name="Enigma" type="Label" parent="MinigameOverlay/Control"]
-layout_mode = 0
-offset_left = 716.0
-offset_top = 169.0
-offset_right = 756.0
-offset_bottom = 192.0
-theme_override_colors/font_color = Color(0.864675, 0.864675, 0.864675, 1)
-text = "Custom Enigma"
-
-[node name="Feedback" type="Label" parent="MinigameOverlay/Control"]
-layout_mode = 0
-offset_left = 716.0
-offset_top = 345.0
-offset_right = 1216.0
-offset_bottom = 438.0
-theme_override_colors/font_color = Color(0.864675, 0.864675, 0.864675, 1)
-text = "Custom Enigma"
-
-[node name="Input" type="LineEdit" parent="MinigameOverlay/Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -235.0
-offset_top = -34.5
-offset_right = 235.0
-offset_bottom = 34.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "hello everyone"
-
-[node name="Submit" type="Button" parent="MinigameOverlay/Control"]
-layout_mode = 0
-anchor_left = 0.369792
-anchor_top = 0.650926
-anchor_right = 0.373958
-anchor_bottom = 0.658333
-offset_right = 492.0
-offset_bottom = 92.0
-text = "Submit"
-metadata/_edit_use_anchors_ = true
 
 [node name="Timer" type="Timer" parent="."]
+autostart = true
 
+[node name="Background" parent="." instance=ExtResource("19_iivbl")]
+
+[connection signal="timer_changed" from="." to="Ui" method="_on_game_timer_changed"]
 [connection signal="state_entered" from="StateMachine/CompoundState/NewPrisoner" to="." method="_on_new_prisoner_state_entered"]
 [connection signal="state_entered" from="StateMachine/CompoundState/PlayerDecision/DecisionState" to="." method="_on_decision_state_state_entered"]
 [connection signal="state_exited" from="StateMachine/CompoundState/PlayerDecision/DecisionState" to="." method="_on_decision_state_state_exited"]
 [connection signal="state_entered" from="StateMachine/CompoundState/PlayerDecision/MercyPuzzle" to="." method="_on_mercy_puzzle_state_entered"]
+[connection signal="state_entered" from="StateMachine/CompoundState/PlayerDecision/BruteForce" to="." method="_on_brute_force_state_entered"]
 [connection signal="state_entered" from="StateMachine/CompoundState/ResolveDecision" to="." method="_on_resolve_decision_state_entered"]
-[connection signal="password_game_ended" from="MinigameOverlay" to="." method="_on_minigame_overlay_password_game_ended"]
-[connection signal="visibility_changed" from="MinigameOverlay" to="MinigameOverlay" method="_on_visibility_changed"]
-[connection signal="pressed" from="MinigameOverlay/Control/Submit" to="MinigameOverlay" method="_on_submit_pressed"]
+[connection signal="finished" from="BruteForceGameOverlay2" to="." method="_on_brute_force_game_overlay_2_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_CountdownTimer_timeout"]

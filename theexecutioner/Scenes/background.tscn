@@ -1,0 +1,125 @@
+[gd_scene load_steps=12 format=3 uid="uid://k1kmblt2pufa"]
+
+[ext_resource type="Texture2D" uid="uid://cfq3465drpd7r" path="res://Packages/kenney_background-elements-redux/Backgrounds/backgroundCastles.png" id="1_xgxeb"]
+[ext_resource type="Texture2D" uid="uid://bsqmg3cmdf7ba" path="res://Packages/kenney_background-elements-redux/Backgrounds/Elements/cloudLayer1.png" id="2_ltlj5"]
+[ext_resource type="Texture2D" uid="uid://dnisx8tgm1qol" path="res://Packages/kenney_background-elements-redux/Backgrounds/Elements/cloudLayerB1.png" id="3_rymcx"]
+[ext_resource type="Texture2D" uid="uid://dk5xfsr8irdwe" path="res://Packages/kenney_background-elements-redux/Backgrounds/Elements/cloudLayerB2.png" id="4_42s4r"]
+[ext_resource type="Texture2D" uid="uid://drl0v34ljauc3" path="res://Packages/kenney_background-elements-redux/PNG/Default/houseAlt1.png" id="5_bdh0s"]
+[ext_resource type="Texture2D" uid="uid://cnwos52c6untu" path="res://Packages/kenney_background-elements-redux/PNG/Default/houseAlt2.png" id="6_7ys8v"]
+[ext_resource type="Texture2D" uid="uid://l557uhkqg2rg" path="res://Packages/kenney_background-elements-redux/PNG/Default/towerAlt.png" id="7_1dkp5"]
+[ext_resource type="Texture2D" uid="uid://pxttmwu7m680" path="res://Packages/kenney_background-elements-redux/PNG/Default/towerSmall.png" id="8_jn2ok"]
+[ext_resource type="Texture2D" uid="uid://bi5g0dochjypj" path="res://Packages/kenney_background-elements-redux/PNG/Retina/treePineSnow.png" id="9_jieww"]
+[ext_resource type="Texture2D" uid="uid://djnv6v6l1b0bk" path="res://Packages/kenney_background-elements-redux/PNG/Retina/houseAlt2.png" id="10_owiv4"]
+[ext_resource type="Texture2D" uid="uid://e5jndounw53m" path="res://Packages/kenney_background-elements-redux/PNG/Retina/treeLongSnow.png" id="11_84a6y"]
+
+[node name="Background" type="Node2D"]
+
+[node name="BackgroundCastles" type="Sprite2D" parent="."]
+modulate = Color(0.864675, 0.864675, 0.864675, 1)
+z_index = -11
+position = Vector2(511, 515)
+texture = ExtResource("1_xgxeb")
+
+[node name="BackgroundCastles2" type="Sprite2D" parent="."]
+modulate = Color(0.864675, 0.864675, 0.864675, 1)
+z_index = -11
+position = Vector2(1535, 515)
+texture = ExtResource("1_xgxeb")
+
+[node name="CloudLayer1" type="Sprite2D" parent="."]
+modulate = Color(0.864675, 0.864675, 0.864675, 1)
+z_index = -11
+position = Vector2(376, 72)
+texture = ExtResource("2_ltlj5")
+
+[node name="CloudLayerB1" type="Sprite2D" parent="."]
+modulate = Color(0.864675, 0.864675, 0.864675, 1)
+z_index = -11
+position = Vector2(1010, 142)
+texture = ExtResource("3_rymcx")
+
+[node name="CloudLayerB2" type="Sprite2D" parent="."]
+modulate = Color(0.864675, 0.864675, 0.864675, 1)
+z_index = -11
+position = Vector2(1434, 15)
+texture = ExtResource("4_42s4r")
+
+[node name="HouseAlt1" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(332, 643)
+texture = ExtResource("5_bdh0s")
+
+[node name="HouseAlt2" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(482, 681)
+texture = ExtResource("6_7ys8v")
+
+[node name="HouseAlt3" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(628, 686)
+texture = ExtResource("5_bdh0s")
+
+[node name="HouseAlt4" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(739, 699)
+texture = ExtResource("5_bdh0s")
+
+[node name="TowerAlt" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(1619, 740)
+scale = Vector2(2.27, 2.27)
+texture = ExtResource("7_1dkp5")
+
+[node name="TowerSmall" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(1485.22, 874.1)
+scale = Vector2(3.38, 3.38)
+texture = ExtResource("8_jn2ok")
+
+[node name="TowerSmall2" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(1752.55, 874.25)
+scale = Vector2(3.38, 3.38)
+texture = ExtResource("8_jn2ok")
+
+[node name="TreePineSnow" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(1298, 556)
+texture = ExtResource("9_jieww")
+
+[node name="TreePineSnow2" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(1521, 556)
+texture = ExtResource("9_jieww")
+
+[node name="TreePineSnow3" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(1007, 556)
+texture = ExtResource("9_jieww")
+
+[node name="TreePineSnow4" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(160, 630)
+texture = ExtResource("9_jieww")
+
+[node name="TreePineSnow5" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(1766, 747)
+texture = ExtResource("9_jieww")
+
+[node name="TreePineSnow6" type="Sprite2D" parent="."]
+z_index = -11
+position = Vector2(1840, 353)
+texture = ExtResource("9_jieww")
+
+[node name="HouseAlt5" type="Sprite2D" parent="."]
+position = Vector2(268, 802)
+texture = ExtResource("10_owiv4")
+
+[node name="TreeLongSnow" type="Sprite2D" parent="."]
+position = Vector2(1299, 790)
+texture = ExtResource("11_84a6y")
+
+[node name="TreeLongSnow2" type="Sprite2D" parent="."]
+position = Vector2(687, 779)
+texture = ExtResource("11_84a6y")
